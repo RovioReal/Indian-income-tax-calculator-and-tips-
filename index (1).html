@@ -1,0 +1,709 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Income Tax Calculator (AY 2024-25) | Pro</title>
+    <meta name="description" content="Comprehensive Indian Income Tax Calculator for AY 2024-25. Calculate tax under Old and New Regimes, explore deductions, get optimization tips, visualize results, and download a PDF report. Features dual themes and professional animations.">
+    <meta name="keywords" content="income tax calculator, india, ay 2024-25, fy 2023-24, old regime, new regime, tax calculation, deductions, 80c, 80d, hra, tax saving, tax optimization, pdf report, dark theme, finance, tool">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Libraries via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --bg-color-light: #f8f9fa; --text-color-light: #212529; --primary-color-light: #007bff; --secondary-color-light: #6c757d; --card-bg-light: #ffffff; --border-color-light: #dee2e6; --input-bg-light: #ffffff; --input-border-light: #ced4da; --success-color-light: #28a745; --error-color-light: #dc3545; --info-color-light: #17a2b8; --warning-color-light: #ffc107; --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08); --highlight-bg-light: #e9ecef;
+            --primary-color-rgb-light: 0, 123, 255; --error-color-rgb-light: 220, 53, 69; --success-color-rgb-light: 40, 167, 69; --info-color-rgb-light: 23, 162, 184;
+            /* Dark Theme Variables */
+            --bg-color-dark: #1a1a1a; --text-color-dark: #e8e8e8; --primary-color-dark: #4dabf7; --secondary-color-dark: #adb5bd; --card-bg-dark: #2c2c2c; --border-color-dark: #4a4a4a; --input-bg-dark: #333; --input-border-dark: #555; --success-color-dark: #20c997; --error-color-dark: #f76e79; --info-color-dark: #3bc9db; --warning-color-dark: #ffd43b; --shadow-dark: 0 5px 20px rgba(0, 0, 0, 0.3); --highlight-bg-dark: #3a3a3a;
+            --primary-color-rgb-dark: 77, 171, 247; --error-color-rgb-dark: 247, 110, 121; --success-color-rgb-dark: 32, 201, 151; --info-color-rgb-dark: 59, 201, 219;
+            /* Applied Variables (Default Light) */
+            --bg-color: var(--bg-color-light); --text-color: var(--text-color-light); --primary-color: var(--primary-color-light); --secondary-color: var(--secondary-color-light); --card-bg: var(--card-bg-light); --border-color: var(--border-color-light); --input-bg: var(--input-bg-light); --input-border: var(--input-border-light); --success-color: var(--success-color-light); --error-color: var(--error-color-light); --info-color: var(--info-color-light); --warning-color: var(--warning-color-light); --shadow: var(--shadow-light); --highlight-bg: var(--highlight-bg-light);
+            --primary-color-rgb: var(--primary-color-rgb-light); --error-color-rgb: var(--error-color-rgb-light); --success-color-rgb: var(--success-color-rgb-light); --info-color-rgb: var(--info-color-rgb-light);
+            /* General */
+            --font-family: 'Poppins', sans-serif; --transition-speed: 0.3s; --animation-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .dark-mode {
+            --bg-color: var(--bg-color-dark); --text-color: var(--text-color-dark); --primary-color: var(--primary-color-dark); --secondary-color: var(--secondary-color-dark); --card-bg: var(--card-bg-dark); --border-color: var(--border-color-dark); --input-bg: var(--input-bg-dark); --input-border: var(--input-border-dark); --success-color: var(--success-color-dark); --error-color: var(--error-color-dark); --info-color: var(--info-color-dark); --warning-color: var(--warning-color-dark); --shadow: var(--shadow-dark); --highlight-bg: var(--highlight-bg-dark);
+            --primary-color-rgb: var(--primary-color-rgb-dark); --error-color-rgb: var(--error-color-rgb-dark); --success-color-rgb: var(--success-color-rgb-dark); --info-color-rgb: var(--info-color-rgb-dark);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { width: 90%; max-width: 1280px; margin: 2rem auto; padding: 1.5rem; flex-grow: 1; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); opacity: 0; transform: translateY(-20px); transition: border-color var(--transition-speed) ease; }
+        header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: var(--primary-color); transition: color var(--transition-speed) ease; display: flex; align-items: center; gap: 12px; }
+        header h1 .fa-calculator { font-size: 0.9em; }
+        header h1 small { font-size: 0.5em; color: var(--secondary-color); font-weight: 400; margin-left: 5px; transition: color var(--transition-speed) ease; }
+        .theme-switch-wrapper { display: flex; align-items: center; }
+        .theme-switch { display: inline-block; height: 30px; position: relative; width: 60px; margin-left: 12px; }
+        .theme-switch input { display: none; }
+        .slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s var(--animation-ease); border-radius: 30px; }
+        .slider:before { background-color: #fff; bottom: 4px; content: ""; height: 22px; left: 4px; position: absolute; transition: .4s var(--animation-ease); width: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #777; }
+        .slider::after { content: '☀️'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #f0ad4e; opacity: 1; transition: opacity 0.4s ease; z-index: 0; }
+        .dark-mode .slider::after { opacity: 0; }
+        input:checked + .slider:before { content: '🌙'; transform: translateX(30px); color: var(--primary-color-dark); background-color: transparent; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        .dark-mode .slider:before { background-color: #ddd; color: #555; }
+        .dark-mode input:checked + .slider:before { color: var(--primary-color-dark); background-color: #e0e0e0; }
+        .theme-switch-wrapper span { font-size: 0.9rem; margin-right: 8px; color: var(--secondary-color); transition: color var(--transition-speed) ease; }
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 992px) { .main-grid { grid-template-columns: 1.2fr 1fr; } }
+        .card { background-color: var(--card-bg); border-radius: 12px; padding: clamp(1rem, 5vw, 1.8rem); box-shadow: var(--shadow); border: 1px solid var(--border-color); transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; opacity: 0; transform: scale(0.95); }
+        .card h2 { font-size: clamp(1.2rem, 4vw, 1.4rem); margin-bottom: 1.8rem; font-weight: 600; color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.8rem; transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease; display: flex; align-items: center; gap: 10px; }
+        .card h2 .fas { font-size: 0.9em; opacity: 0.8; }
+        #results-section h2 .fa-chart-line { color: var(--success-color); }
+        .form-group { margin-bottom: 1.5rem; opacity: 0; transform: translateX(-15px); position: relative; }
+        .form-group label { display: flex; align-items: center; gap: 6px; margin-bottom: 0.6rem; font-weight: 500; font-size: 0.98rem; }
+        .form-group label .fa-info-circle { color: var(--secondary-color); cursor: pointer; font-size: 0.9em; transition: color 0.2s ease; }
+        .form-group label .fa-info-circle:hover { color: var(--primary-color); }
+        [data-tooltip] { position: relative; }
+        [data-tooltip]::after { content: attr(data-tooltip); position: absolute; left: 50%; transform: translateX(-50%) translateY(-5px); bottom: 130%; background-color: #333; color: #fff; padding: 6px 12px; border-radius: 5px; font-size: 0.88rem; line-height: 1.4; font-weight: 400; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; z-index: 100; pointer-events: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        [data-tooltip]::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: 130%; margin-bottom: -5px; border-width: 5px; border-style: solid; border-color: #333 transparent transparent transparent; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; z-index: 100; pointer-events: none; }
+        [data-tooltip]:hover::after, [data-tooltip]:hover::before { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .dark-mode [data-tooltip]::after { background-color: #eee; color: #333; }
+        .dark-mode [data-tooltip]::before { border-top-color: #eee; }
+        .form-group input[type="number"], .form-group select { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--text-color); border-radius: 6px; font-size: 1rem; font-family: var(--font-family); transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease, box-shadow 0.2s ease; appearance: none; -webkit-appearance: none; /* Remove default spinner */ }
+        .form-group input[type="number"]::-webkit-outer-spin-button, .form-group input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } /* Hide number spinners */
+        .form-group input[type="number"] { -moz-appearance: textfield; } /* Firefox hide number spinner */
+        .form-group input[type="number"]:focus, .form-group select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2); }
+        .form-group input:disabled, .form-group select:disabled { background-color: var(--highlight-bg); opacity: 0.7; cursor: not-allowed; border-color: var(--border-color); }
+        .form-group input.error-input, .form-group select.error-input { border-color: var(--error-color) !important; }
+        .form-group input.error-input:focus, .form-group select.error-input:focus { box-shadow: 0 0 0 3px rgba(var(--error-color-rgb), 0.25) !important; }
+        .error-message { color: var(--error-color); font-size: 0.85rem; margin-top: 0.4rem; min-height: 1.2em; opacity: 0; transition: opacity var(--transition-speed) ease; position: absolute; bottom: -1.4em; left: 0; }
+        .error-message.visible { opacity: 1; }
+        .regime-toggle-wrapper { margin-bottom: 2rem; }
+        .regime-toggle { display: flex; background-color: var(--highlight-bg); border-radius: 30px; padding: 6px; position: relative; border: 1px solid var(--border-color); opacity: 0; transform: translateY(10px); transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease; }
+        .regime-toggle label { flex: 1; text-align: center; padding: 0.7rem 1.2rem; cursor: pointer; z-index: 1; position: relative; font-weight: 500; font-size: 0.95rem; transition: color 0.4s ease; margin-bottom: 0; border-radius: 25px; }
+        .regime-toggle input[type="radio"] { display: none; }
+        .regime-slider { position: absolute; top: 6px; bottom: 6px; width: calc(50% - 6px); background-color: var(--primary-color); border-radius: 25px; transition: transform 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55), background-color var(--transition-speed) ease; z-index: 0; left: 6px; }
+        #regime-new:checked ~ .regime-slider { transform: translateX(0%); }
+        #regime-old:checked ~ .regime-slider { transform: translateX(calc(100% + 0px)); }
+        #regime-new:checked ~ label[for="regime-new"], #regime-old:checked ~ label[for="regime-old"] { color: white; font-weight: 600; }
+        #regime-new:not(:checked) ~ label[for="regime-new"]:hover, #regime-old:not(:checked) ~ label[for="regime-old"]:hover { background-color: rgba(var(--primary-color-rgb), 0.1); }
+        #deductions-section { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-color); transition: border-color var(--transition-speed) ease, opacity 0.4s ease; }
+        #deductions-section h3 { font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        #deduction-regime-note { font-size: 0.8em; color: var(--secondary-color); font-weight: 400; margin-left: auto; transition: color var(--transition-speed) ease; }
+        #fg-hra { transition: opacity 0.4s ease, max-height 0.4s ease; overflow: hidden; }
+        .hra-inputs { max-height: 0; overflow: hidden; transition: max-height 0.6s ease-in-out, opacity 0.5s ease, margin-top 0.5s ease, padding 0.5s ease; opacity: 0; margin-top: 0; padding-left: 1.2rem; margin-left: -1.2rem; border-left: 3px solid var(--info-color); background-color: rgba(var(--info-color-rgb), 0.05); border-radius: 0 8px 8px 0; padding-top: 0; padding-bottom: 0; }
+        .hra-inputs.visible { max-height: 600px; opacity: 1; margin-top: 1rem; padding-top: 1rem; padding-bottom: 0.5rem; }
+        .hra-inputs > p { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--info-color); }
+        #results-output { margin-top: 1rem; }
+        #initial-message { padding: 2rem 1rem; text-align: center; color: var(--secondary-color); font-size: 1.1rem; border: 2px dashed var(--border-color); border-radius: 8px; background-color: var(--highlight-bg); transition: all var(--transition-speed) ease; }
+        .results-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; opacity: 0; transform: translateY(10px); }
+        .summary-item { background-color: var(--highlight-bg); padding: 1.2rem; border-radius: 8px; border-left: 5px solid var(--primary-color); transition: all var(--transition-speed) ease; opacity: 0; transform: scale(0.9); position: relative; overflow: hidden; }
+        .summary-item:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .dark-mode .summary-item:hover { box-shadow: 0 6px 12px rgba(0,0,0,0.25); }
+        .summary-item.taxable-income-item { border-color: var(--warning-color); }
+        .summary-item.tax-payable-item { border-color: var(--error-color); }
+        .summary-item.take-home-item { border-color: var(--success-color); }
+        .summary-item p { font-size: 0.9rem; color: var(--secondary-color); margin-bottom: 0.4rem; transition: color var(--transition-speed) ease; font-weight: 500; }
+        .summary-item span { font-size: clamp(1.3rem, 4vw, 1.6rem); font-weight: 700; display: block; color: var(--text-color); transition: color var(--transition-speed) ease; }
+        .result-value { display: inline-block; }
+        .breakdown-container h3 { font-size: 1.2rem; margin-bottom: 1rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-color); }
+        .breakdown-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+        .breakdown-table th, .breakdown-table td { text-align: left; padding: 0.8rem 0.6rem; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; transition: all var(--transition-speed) ease; opacity: 0; transform: translateX(-10px); }
+        .breakdown-table th { font-weight: 500; color: var(--secondary-color); width: 65%; }
+        .breakdown-table tr:last-child th, .breakdown-table tr:last-child td { border-bottom: none; }
+        .breakdown-table td:last-child { font-weight: 600; text-align: right; color: var(--text-color); }
+        .breakdown-table tr.highlight-row th, .breakdown-table tr.highlight-row td { font-weight: 600; background-color: var(--highlight-bg); }
+        .breakdown-table tr.total-tax-row td { color: var(--error-color); font-size: 1.05em; }
+        .comparison-note, .optimization-suggestions { margin-top: 1.8rem; padding: 1.2rem; background-color: var(--highlight-bg); border-radius: 8px; border-left: 4px solid var(--info-color); transition: all var(--transition-speed) ease; opacity: 0; transform: scale(0.95); }
+        .optimization-suggestions { border-color: var(--warning-color); }
+        .comparison-note h3, .optimization-suggestions h3 { font-size: 1.15rem; margin-bottom: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 8px; color: var(--info-color); }
+        .optimization-suggestions h3 { color: var(--warning-color); }
+        .optimization-suggestions h3 .fa-lightbulb { color: var(--warning-color); }
+        .optimization-suggestions ul { list-style: none; padding-left: 0; }
+        .optimization-suggestions li { margin-bottom: 0.7rem; padding-left: 1.8rem; position: relative; font-size: 0.98rem; line-height: 1.5; opacity: 0; transform: translateX(-10px); }
+        .optimization-suggestions li::before { font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; top: 4px; width: 1em; text-align: center; }
+        .optimization-suggestions li.suggestion-good::before { content: "\f058"; color: var(--success-color); }
+        .optimization-suggestions li.suggestion-info::before { content: "\f05a"; color: var(--info-color); }
+        .optimization-suggestions li strong { color: var(--primary-color); font-weight: 600; }
+        .optimization-suggestions .placeholder-suggestion::before { content: "\f128"; color: var(--secondary-color); }
+        .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.5rem; margin-top: 2.5rem; opacity: 0; transform: translateY(20px); }
+        .chart-wrapper { background: var(--card-bg); padding: 1.2rem; border-radius: 8px; box-shadow: var(--shadow); border: 1px solid var(--border-color); position: relative; transition: all var(--transition-speed) ease; opacity: 0; transform: scale(0.9); min-height: 300px; display: flex; flex-direction: column; }
+        .chart-wrapper h4 { text-align: center; margin-bottom: 1rem; font-weight: 500; font-size: 1rem; color: var(--secondary-color); transition: color var(--transition-speed) ease; flex-shrink: 0; }
+        .chart-wrapper canvas { max-width: 100%; height: auto !important; flex-grow: 1; }
+        .download-button-container { text-align: center; margin-top: 2.5rem; opacity: 0; transform: translateY(20px); }
+        .btn-download { background-color: var(--success-color); color: white; border: none; padding: 0.9rem 2rem; font-size: 1.1rem; font-weight: 600; border-radius: 30px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(var(--success-color-rgb), 0.3); text-decoration: none; }
+        .btn-download:hover:not(:disabled) { background-color: #218838; .dark-mode & { background-color: #1a9850; } transform: translateY(-3px); box-shadow: 0 7px 15px rgba(var(--success-color-rgb), 0.4); }
+        .btn-download:active:not(:disabled) { transform: translateY(0); box-shadow: 0 3px 8px rgba(var(--success-color-rgb), 0.3); }
+        .btn-download:disabled { background-color: var(--secondary-color); cursor: not-allowed; opacity: 0.6; box-shadow: none; transform: none; }
+        .btn-download .fa-spinner { animation: fa-spin 1.5s linear infinite; }
+        @keyframes fa-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        footer { text-align: center; margin-top: 4rem; padding: 1.5rem 0; font-size: 0.9rem; color: var(--secondary-color); border-top: 1px solid var(--border-color); transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease; opacity: 0; transform: translateY(20px); }
+        footer p { margin-bottom: 0.5rem; }
+        footer a { color: var(--primary-color); text-decoration: none; font-weight: 500; transition: color var(--transition-speed) ease; }
+        footer a:hover { text-decoration: underline; color: #0056b3; .dark-mode & { color: #69b7f7; } }
+        footer .fa-heart { color: var(--error-color); }
+        .disclaimer { font-size: 0.85rem; margin-top: 0.8rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+        @media (max-width: 991px) { .main-grid { grid-template-columns: 1fr; } .container { width: 95%; } header h1 { font-size: clamp(1.4rem, 5vw, 1.8rem); } }
+        @media (max-width: 768px) { html { font-size: 15px; } header { flex-direction: column; align-items: flex-start; gap: 1rem; } .theme-switch-wrapper { align-self: flex-end; } .results-summary { grid-template-columns: 1fr; } .breakdown-table th, .breakdown-table td { padding: 0.7rem 0.4rem; font-size: 0.92rem; } .summary-item span { font-size: clamp(1.2rem, 4vw, 1.5rem); } .btn-download { font-size: 1rem; padding: 0.8rem 1.6rem; } }
+        @media (max-width: 480px) { html { font-size: 14px; } .container { padding: 1rem 0.8rem; } header h1 { font-size: clamp(1.2rem, 6vw, 1.5rem); } .card { padding: clamp(0.8rem, 4vw, 1.2rem); } .form-group input, .form-group select { padding: 0.7rem 0.9rem; } .regime-toggle label { font-size: 0.9rem; padding: 0.6rem 1rem; } .charts-container { gap: 1rem; } .chart-wrapper { padding: 1rem; min-height: 250px; } .breakdown-table th { width: 60%; } footer { margin-top: 3rem; font-size: 0.85rem; } }
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 2px; box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3); border-radius: 4px; }
+        .theme-switch input:focus-visible + .slider { outline: 3px solid var(--primary-color); outline-offset: 2px; box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3); }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } .regime-slider { transition: none !important; } .result-value { transition: none !important; } }
+        .hidden { display: none !important; }
+        .visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 0.5rem; } .mt-2 { margin-top: 1rem; } .mb-1 { margin-bottom: 0.5rem; } .mb-2 { margin-bottom: 1rem; } .mt-3 { margin-top: 1.5rem; } .mb-3 { margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header id="main-header">
+            <h1>
+                <i class="fas fa-calculator"></i> Pro Indian Tax Calculator
+                <small>(AY 2024-25)</small>
+            </h1>
+            <div class="theme-switch-wrapper">
+                <span id="theme-label" aria-hidden="true">Light Mode</span>
+                <label class="theme-switch" for="theme-toggle-checkbox">
+                    <input type="checkbox" id="theme-toggle-checkbox" class="visually-hidden" aria-label="Toggle theme">
+                    <div class="slider"></div>
+                </label>
+            </div>
+        </header>
+
+        <main class="main-grid">
+            <section class="card" id="input-card">
+                <h2><i class="fas fa-edit"></i> Enter Your Financial Details</h2>
+                <form id="tax-form" novalidate>
+                    <div class="form-group regime-toggle-wrapper">
+                        <label class="text-center mb-1" id="regime-label">Choose Tax Regime:</label>
+                        <div class="regime-toggle" role="radiogroup" aria-labelledby="regime-label">
+                            <input type="radio" id="regime-new" name="taxRegime" value="new" checked>
+                            <input type="radio" id="regime-old" name="taxRegime" value="old">
+                            <label for="regime-new" id="label-regime-new">New Regime (Default)</label>
+                            <label for="regime-old" id="label-regime-old">Old Regime</label>
+                            <div class="regime-slider" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                     <div class="form-group income-group" id="fg-gross-salary">
+                         <label for="gross-salary">Gross Salary Income <i class="fas fa-info-circle" data-tooltip="Total salary before any deductions like PF, Prof. Tax etc. Required."></i></label>
+                         <input type="number" id="gross-salary" placeholder="e.g., 1200000" min="0" step="1000" required aria-required="true">
+                         <div class="error-message" id="gross-salary-error" role="alert"></div>
+                    </div>
+                     <div class="form-group income-group" id="fg-other-income">
+                        <label for="other-income">Income from Other Sources <i class="fas fa-info-circle" data-tooltip="e.g., Interest, Dividends, Rental income (net), Capital Gains etc. Enter 0 if none."></i></label>
+                        <input type="number" id="other-income" placeholder="e.g., 50000" min="0" step="1000" value="0">
+                        <div class="error-message" id="other-income-error" role="alert"></div>
+                    </div>
+                    <div id="deductions-wrapper">
+                        <div id="deductions-section">
+                             <h3><i class="fas fa-wallet"></i> Deductions & Exemptions <span id="deduction-regime-note"></span></h3>
+                             <div class="form-group deduction-group" id="fg-hra">
+                                <label for="claim-hra">Claim HRA Exemption? <i class="fas fa-info-circle" data-tooltip="HRA Exemption is available ONLY under the Old Regime."></i></label>
+                                <select id="claim-hra" disabled><option value="no" selected>No</option><option value="yes">Yes (Requires Old Regime)</option></select>
+                             </div>
+                            <div class="hra-inputs" id="hra-details">
+                                 <p>HRA Details (Annual Figures):</p>
+                                 <div class="form-group" id="fg-basic-salary-hra">
+                                    <label for="basic-salary-hra">Basic Salary (for HRA calc) <i class="fas fa-info-circle" data-tooltip="Usually Basic + DA. Check salary structure. Required if claiming HRA."></i></label>
+                                    <input type="number" id="basic-salary-hra" placeholder="e.g., 600000" min="0" step="1000">
+                                    <div class="error-message" id="basic-salary-hra-error" role="alert"></div>
+                                 </div>
+                                 <div class="form-group" id="fg-hra-received">
+                                     <label for="hra-received">HRA Received <i class="fas fa-info-circle" data-tooltip="Total HRA component in salary. Required if claiming HRA."></i></label>
+                                    <input type="number" id="hra-received" placeholder="e.g., 240000" min="0" step="1000">
+                                    <div class="error-message" id="hra-received-error" role="alert"></div>
+                                 </div>
+                                 <div class="form-group" id="fg-rent-paid">
+                                     <label for="rent-paid">Total Rent Paid <i class="fas fa-info-circle" data-tooltip="Required if claiming HRA."></i></label>
+                                    <input type="number" id="rent-paid" placeholder="e.g., 300000" min="0" step="1000">
+                                    <div class="error-message" id="rent-paid-error" role="alert"></div>
+                                 </div>
+                                <div class="form-group" id="fg-metro-city">
+                                    <label for="metro-city">Living in Metro City?</label>
+                                    <select id="metro-city"><option value="yes">Yes (Mumbai, Delhi, Chennai, Kolkata)</option><option value="no" selected>No</option></select>
+                                 </div>
+                            </div>
+                            <div class="form-group deduction-group" id="fg-80c">
+                                <label for="deduction-80c">Section 80C <i class="fas fa-info-circle" data-tooltip="EPF, PPF, ELSS, Life Ins. Premium, Home Loan Principal, etc. Max: ₹1,50,000 (Old Regime Only)"></i></label>
+                                <input type="number" id="deduction-80c" placeholder="Max 1,50,000" min="0" max="150000" step="1000" value="0" disabled>
+                                <div class="error-message" id="deduction-80c-error" role="alert"></div>
+                            </div>
+                            <div class="form-group deduction-group" id="fg-80d">
+                                <label for="deduction-80d">Section 80D (Health Insurance) <i class="fas fa-info-circle" data-tooltip="Self/Family (max ₹25k or ₹50k if senior) + Parents (additional max ₹25k or ₹50k if senior). Enter total eligible. (Old Regime Only)"></i></label>
+                                <input type="number" id="deduction-80d" placeholder="Enter total eligible amount" min="0" step="500" value="0" disabled>
+                                <div class="error-message" id="deduction-80d-error" role="alert"></div>
+                            </div>
+                            <div class="form-group deduction-group" id="fg-80e">
+                                <label for="deduction-80e">Section 80E (Edu Loan Interest) <i class="fas fa-info-circle" data-tooltip="Interest paid on loan for higher education. No max limit on interest. (Old Regime Only)"></i></label>
+                                <input type="number" id="deduction-80e" placeholder="Enter total interest paid" min="0" step="1000" value="0" disabled>
+                                <div class="error-message" id="deduction-80e-error" role="alert"></div>
+                            </div>
+                            <div class="form-group deduction-group" id="fg-nps-80ccd1b">
+                                 <label for="deduction-nps-80ccd1b">Sec 80CCD(1B) (NPS Self) <i class="fas fa-info-circle" data-tooltip="Additional deduction for NPS self-contribution. Max: ₹50,000 (Old Regime Only)"></i></label>
+                                 <input type="number" id="deduction-nps-80ccd1b" placeholder="Max 50,000" min="0" max="50000" step="1000" value="0" disabled>
+                                 <div class="error-message" id="deduction-nps-80ccd1b-error" role="alert"></div>
+                            </div>
+                             <div class="form-group deduction-info" id="fg-std-deduction-info">
+                                 <p style="font-size: 0.9rem; color: var(--secondary-color); padding: 0.5rem; background: var(--highlight-bg); border-radius: 4px;">
+                                    <i class="fas fa-info-circle"></i> Standard Deduction (₹50,000) applies to Salary Income under <strong>both</strong> Regimes (auto-calculated).
+                                 </p>
+                             </div>
+                        </div>
+                    </div>
+                 </form>
+            </section>
+
+            <section class="card" id="results-section">
+                 <h2><i class="fas fa-chart-line"></i> Tax Calculation Summary</h2>
+                 <div id="initial-message" class="text-center mt-2"><p>Enter your income details to calculate tax.</p></div>
+                 <div id="results-output" class="hidden">
+                    <div class="results-summary" id="res-summary-wrapper">
+                         <div class="summary-item taxable-income-item" id="res-taxable-income"><p>Net Taxable Income</p><span class="result-value" data-value="0">₹ 0</span></div>
+                        <div class="summary-item tax-payable-item" id="res-total-tax"><p>Total Tax Payable</p><span class="result-value" data-value="0">₹ 0</span></div>
+                         <div class="summary-item take-home-item" id="res-net-income"><p>Net Annual Pay (Post Tax)</p><span class="result-value" data-value="0">₹ 0</span></div>
+                        <div class="summary-item take-home-item" id="res-net-income-monthly"><p>Net Monthly Pay (Post Tax)</p><span class="result-value" data-value="0">₹ 0</span></div>
+                    </div>
+                     <div class="comparison-note" id="comparison-note" style="display: none;"></div>
+                     <div class="breakdown-container">
+                         <h3><i class="fas fa-list-ul"></i> Annual Breakdown</h3>
+                        <table class="breakdown-table" id="res-breakdown-table"><tbody>
+                            <tr id="row-gross-income"><th>Gross Total Income</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-std-deduction"><th>(-) Standard Deduction</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-hra-deduction"><th>(-) HRA Exemption</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-80c-deduction"><th>(-) Section 80C</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-80d-deduction"><th>(-) Section 80D</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-80e-deduction"><th>(-) Section 80E</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-nps-deduction"><th>(-) Sec 80CCD(1B)</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-total-deductions" class="highlight-row"><th>Total Deductions & Exemptions</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-net-taxable-income" class="highlight-row"><th>(=) Net Taxable Income</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-income-tax"><th>Income Tax</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-rebate"><th>(-) Rebate u/s 87A</th><td data-value="0">(-) ₹ 0</td></tr>
+                            <tr id="row-tax-after-rebate"><th>Tax After Rebate</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-cess"><th>(+) Health & Edu Cess (4%)</th><td data-value="0">₹ 0</td></tr>
+                            <tr id="row-total-tax-payable" class="highlight-row total-tax-row"><th>(=) Total Tax Payable</th><td data-value="0">₹ 0</td></tr>
+                         </tbody></table>
+                     </div>
+                     <div class="optimization-suggestions" id="optimization-suggestions">
+                        <h3><i class="fas fa-lightbulb"></i> Tax Optimization Suggestions</h3>
+                        <ul id="suggestions-list"><li class="placeholder-suggestion">Suggestions appear here.</li></ul>
+                    </div>
+                     <div class="charts-container" id="chart-area">
+                        <div class="chart-wrapper" id="wrapper-comparison-chart"><h4><i class="fas fa-balance-scale-right"></i> Old vs New Regime Tax</h4><canvas id="comparisonChart" role="img" aria-label="Bar chart comparing tax in Old vs New regime"></canvas></div>
+                         <div class="chart-wrapper" id="wrapper-income-breakdown-chart"><h4><i class="fas fa-chart-pie"></i> Income Breakdown (Annual)</h4><canvas id="incomeBreakdownChart" role="img" aria-label="Doughnut chart income split"></canvas></div>
+                         <div class="chart-wrapper" id="wrapper-tax-components-chart" style="display:none;"><h4><i class="fas fa-percentage"></i> Tax Components</h4><canvas id="taxComponentsChart" role="img" aria-label="Pie chart showing tax components"></canvas></div>
+                     </div>
+                     <div class="download-button-container"><button id="download-pdf" class="btn-download" disabled><i class="fas fa-file-pdf"></i> Download PDF Report</button></div>
+                </div>
+             </section>
+        </main>
+
+        <footer>
+            <p>Built with <i class="fas fa-heart"></i> for educational purposes. Hosted on GitHub Pages.</p>
+            <p class="disclaimer"><strong>Disclaimer:</strong> Estimated calculation for AY 2024-25. Excludes complexities like surcharge, detailed capital gains etc. Tax laws change. Consult a qualified tax professional for advice.</p>
+             <p><a href="https://github.com/YOUR_USERNAME/YOUR_REPO_NAME" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View Source on GitHub</a></p> {/* UPDATE LINK */}
+             <p>© <span id="current-year"></span> Your Name / Project Name. All Rights Reserved.</p> {/* UPDATE NAME */}
+         </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const CURRENT_AY = "2024-25";
+            const STD_DEDUCTION_AMOUNT = 50000;
+            const NEW_REGIME_REBATE_LIMIT = 700000;
+            const OLD_REGIME_REBATE_LIMIT = 500000;
+            const OLD_REGIME_REBATE_MAX_AMOUNT = 12500;
+            const MAX_80C_LIMIT = 150000;
+            const MAX_80CCD1B_LIMIT = 50000;
+            const CESS_RATE = 0.04;
+
+            let taxData = {};
+            let charts = {};
+            let isDarkMode = false;
+            let calculationTimeout;
+
+            const qs = (selector) => document.querySelector(selector);
+            const qsa = (selector) => document.querySelectorAll(selector);
+            const formatCurrency = (value, hideZero = false) => {
+                 const roundedValue = Math.round(Number(value));
+                 if (hideZero && roundedValue === 0) return "₹ -";
+                 if (isNaN(roundedValue)) return "₹ 0"; // Handle NaN explicitly
+                const formatted = Math.abs(roundedValue).toLocaleString('en-IN');
+                 return roundedValue < 0 ? `(-) ₹ ${formatted}` : `₹ ${formatted}`;
+             };
+
+             // DOM Elements
+             const form = qs('#tax-form'); const grossSalaryInput = qs('#gross-salary'); const otherIncomeInput = qs('#other-income'); const regimeNewRadio = qs('#regime-new'); const regimeOldRadio = qs('#regime-old'); const claimHraSelect = qs('#claim-hra'); const hraDetailsDiv = qs('#hra-details'); const basicSalaryHraInput = qs('#basic-salary-hra'); const hraReceivedInput = qs('#hra-received'); const rentPaidInput = qs('#rent-paid'); const metroCitySelect = qs('#metro-city'); const deduction80CInput = qs('#deduction-80c'); const deduction80DInput = qs('#deduction-80d'); const deduction80EInput = qs('#deduction-80e'); const deductionNpsInput = qs('#deduction-nps-80ccd1b'); const deductionsSection = qs('#deductions-section'); const deductionInputs = qsa('#deductions-section .deduction-group input, #deductions-section .deduction-group select, #hra-details input, #hra-details select'); const deductionRegimeNote = qs('#deduction-regime-note'); const resultsOutput = qs('#results-output'); const initialMessage = qs('#initial-message'); const downloadPdfButton = qs('#download-pdf'); const suggestionsList = qs('#suggestions-list'); const comparisonNoteDiv = qs('#comparison-note');
+            const resTaxableIncomeSpan = qs('#res-taxable-income .result-value'); const resTotalTaxSpan = qs('#res-total-tax .result-value'); const resNetIncomeSpan = qs('#res-net-income .result-value'); const resNetIncomeMonthlySpan = qs('#res-net-income-monthly .result-value');
+             const tableCells = {
+                grossIncome: qs('#row-gross-income td'), stdDeduction: qs('#row-std-deduction td'), hraDeduction: qs('#row-hra-deduction td'), c80cDeduction: qs('#row-80c-deduction td'), c80dDeduction: qs('#row-80d-deduction td'), c80eDeduction: qs('#row-80e-deduction td'), npsDeduction: qs('#row-nps-deduction td'), totalDeductions: qs('#row-total-deductions td'), netTaxableIncome: qs('#row-net-taxable-income td'), incomeTax: qs('#row-income-tax td'), rebate: qs('#row-rebate td'), taxAfterRebate: qs('#row-tax-after-rebate td'), cess: qs('#row-cess td'), totalTaxPayable: qs('#row-total-tax-payable td')
+             };
+            const comparisonChartCtx = qs('#comparisonChart').getContext('2d'); const incomeBreakdownChartCtx = qs('#incomeBreakdownChart').getContext('2d'); const taxComponentsChartCtx = qs('#taxComponentsChart').getContext('2d');
+             const themeToggle = qs('#theme-toggle-checkbox'); const themeLabel = qs('#theme-label'); const body = document.body; const htmlEl = document.documentElement;
+
+            const applyTheme = (theme, isInitial = false) => {
+                isDarkMode = theme === 'dark';
+                htmlEl.classList.toggle('dark-mode', isDarkMode);
+                themeLabel.textContent = isDarkMode ? 'Dark Mode' : 'Light Mode';
+                themeToggle.checked = isDarkMode;
+                localStorage.setItem('theme', theme);
+                 if (!isInitial && Object.keys(charts).length > 0) { updateChartThemes(); }
+             };
+
+             const toggleTheme = () => {
+                 const newTheme = isDarkMode ? 'light' : 'dark';
+                gsap.to("body", { backgroundColor: `var(--bg-color-${newTheme})`, duration: 0.1, onComplete: () => applyTheme(newTheme) });
+                gsap.fromTo(themeToggle.nextElementSibling.querySelector('.slider:before'), { scale: 1 }, { scale: 1.15, yoyo: true, repeat: 1, duration: 0.2, ease: 'power2.inOut' });
+            };
+
+             const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+             applyTheme(savedTheme, true);
+             themeToggle.addEventListener('change', toggleTheme);
+
+             const showError = (inputId, message) => {
+                 const inputElement = qs(`#${inputId}`); const errorElement = qs(`#${inputId}-error`); if (!inputElement || !errorElement) return;
+                inputElement.classList.add('error-input'); inputElement.setAttribute('aria-invalid', 'true'); inputElement.setAttribute('aria-describedby', `${inputId}-error`);
+                 gsap.killTweensOf(inputElement); gsap.fromTo(inputElement, { x: 0 }, { x: "-=3", duration: 0.06, repeat: 5, yoyo: true, ease: "power1.inOut", clearProps: "x" });
+                errorElement.textContent = message; errorElement.classList.add('visible');
+                 gsap.fromTo(errorElement, { opacity: 0, y: -5 }, { opacity: 1, y: 0, duration: 0.3, ease: "power1.out" });
+                 disableDownloadButton();
+            };
+
+             const clearError = (inputId) => {
+                 const inputElement = qs(`#${inputId}`); const errorElement = qs(`#${inputId}-error`); if (!inputElement || !errorElement) return;
+                inputElement.classList.remove('error-input'); inputElement.setAttribute('aria-invalid', 'false'); inputElement.removeAttribute('aria-describedby');
+                 gsap.to(errorElement, { opacity: 0, duration: 0.2, ease: "power1.in", onComplete: () => { errorElement.textContent = ''; errorElement.classList.remove('visible'); } });
+             };
+
+             const clearAllErrors = () => { qsa('.error-message').forEach(el => clearError(el.id.replace('-error', ''))); };
+
+             const validateNumberInput = (inputId, fieldName, isRequired, maxLimit = Infinity, minLimit = 0) => {
+                 const input = qs(`#${inputId}`); const valueStr = input.value.trim(); let value = NaN; clearError(inputId);
+                 if (isRequired && valueStr === '') { showError(inputId, `${fieldName} is required.`); return { isValid: false, value: NaN }; }
+                if (!isRequired && valueStr === '') { return { isValid: true, value: 0 }; }
+                value = parseFloat(valueStr);
+                 if (isNaN(value)) { showError(inputId, `Invalid number for ${fieldName}.`); return { isValid: false, value: NaN }; }
+                 if (value < minLimit) { showError(inputId, `${fieldName} cannot be negative.`); return { isValid: false, value: value }; }
+                 if (value > maxLimit) { showError(inputId, `${fieldName} cannot exceed ${formatCurrency(maxLimit)}.`); return { isValid: false, value: value }; }
+                 return { isValid: true, value: value };
+             };
+
+            const validateForm = () => {
+                clearAllErrors(); let isFormValid = true; let inputValues = {};
+                const salaryValidation = validateNumberInput('gross-salary', 'Gross Salary', true); if (!salaryValidation.isValid) isFormValid = false; inputValues.grossSalary = salaryValidation.value ?? 0;
+                const otherIncomeValidation = validateNumberInput('other-income', 'Other Income', false); if (!otherIncomeValidation.isValid) isFormValid = false; inputValues.otherIncome = otherIncomeValidation.value ?? 0;
+                inputValues.claimHRA = claimHraSelect.value; inputValues.isMetro = metroCitySelect.value === 'yes';
+                const isOldRegimeSelected = regimeOldRadio.checked;
+
+                if (isOldRegimeSelected) {
+                     if (inputValues.claimHRA === 'yes') {
+                        const hraBasicValidation = validateNumberInput('basic-salary-hra', 'Basic Salary (HRA)', true); if (!hraBasicValidation.isValid) isFormValid = false; inputValues.basicSalaryHRA = hraBasicValidation.value ?? 0;
+                        const hraReceivedValidation = validateNumberInput('hra-received', 'HRA Received', true); if (!hraReceivedValidation.isValid) isFormValid = false; inputValues.hraReceived = hraReceivedValidation.value ?? 0;
+                        const hraRentPaidValidation = validateNumberInput('rent-paid', 'Rent Paid', true); if (!hraRentPaidValidation.isValid) isFormValid = false; inputValues.rentPaid = hraRentPaidValidation.value ?? 0;
+                    } else { inputValues.basicSalaryHRA = 0; inputValues.hraReceived = 0; inputValues.rentPaid = 0; }
+
+                     const c80cValidation = validateNumberInput('deduction-80c', 'Section 80C', false, MAX_80C_LIMIT); if (!c80cValidation.isValid) isFormValid = false; inputValues.deduction80C = c80cValidation.value ?? 0;
+                     const c80dValidation = validateNumberInput('deduction-80d', 'Section 80D', false); if (!c80dValidation.isValid) isFormValid = false; inputValues.deduction80D = c80dValidation.value ?? 0;
+                    const c80eValidation = validateNumberInput('deduction-80e', 'Section 80E', false); if (!c80eValidation.isValid) isFormValid = false; inputValues.deduction80E = c80eValidation.value ?? 0;
+                     const npsValidation = validateNumberInput('deduction-nps-80ccd1b', 'Sec 80CCD(1B)', false, MAX_80CCD1B_LIMIT); if (!npsValidation.isValid) isFormValid = false; inputValues.deductionNps = npsValidation.value ?? 0;
+                 } else { inputValues.basicSalaryHRA = 0; inputValues.hraReceived = 0; inputValues.rentPaid = 0; inputValues.deduction80C = 0; inputValues.deduction80D = 0; inputValues.deduction80E = 0; inputValues.deductionNps = 0; }
+
+                if (isFormValid) { enableDownloadButton(); } else { disableDownloadButton(); hideResults(); }
+                 return { isValid: isFormValid, values: inputValues };
+            };
+
+            const calculateHraExemption = (basic, hraReceived, rentPaid, isMetro) => {
+                if (basic <= 0 || rentPaid <= 0 || hraReceived <= 0) return 0;
+                const rentOver10pctBasic = Math.max(0, rentPaid - (0.10 * basic));
+                const hraLimitPct = isMetro ? 0.50 : 0.40; const salaryLimit = hraLimitPct * basic;
+                 return Math.round(Math.min(hraReceived, rentOver10pctBasic, salaryLimit));
+             };
+
+            const updateDeductionsUI = (isOldRegime) => {
+                 gsap.to(deductionsSection, { opacity: 1, duration: 0.4 }); // Always show section
+
+                deductionInputs.forEach(input => {
+                     const isHraField = ['basic-salary-hra', 'hra-received', 'rent-paid', 'metro-city'].includes(input.id);
+                    const isOldOnlyField = ['deduction-80c', 'deduction-80d', 'deduction-80e', 'deduction-nps-80ccd1b'].includes(input.id) || isHraField;
+                     const isDisabled = isOldOnlyField ? !isOldRegime : false;
+                    // Special handling for HRA Claim select itself
+                     if(input.id === 'claim-hra'){ input.disabled = !isOldRegime; } else { input.disabled = isDisabled; }
+
+                    const formGroup = input.closest('.form-group');
+                    if (input.disabled) {
+                         if (input.tagName !== 'SELECT' && input.id !== 'claim-hra') { input.value = '0'; }
+                         else if (input.id === 'claim-hra') { input.value = 'no'; }
+                        clearError(input.id);
+                        gsap.to(formGroup, { opacity: 0.5, duration: 0.3 });
+                     } else {
+                         gsap.to(formGroup, { opacity: 1, duration: 0.3 });
+                     }
+                 });
+                 deductionRegimeNote.textContent = isOldRegime ? '(Old Regime Deductions Enabled)' : '(Only Std. Deduction applicable)';
+                 toggleHraDetailsVisibility();
+             };
+
+            const toggleHraDetailsVisibility = () => {
+                const shouldShow = regimeOldRadio.checked && claimHraSelect.value === 'yes';
+                if (shouldShow) {
+                    if (!hraDetailsDiv.classList.contains('visible')) {
+                         hraDetailsDiv.classList.add('visible');
+                        gsap.to(hraDetailsDiv, { maxHeight: '600px', opacity: 1, marginTop: '1rem', paddingTop: '1rem', paddingBottom: '0.5rem', duration: 0.5, ease: 'power2.out' });
+                        gsap.fromTo(hraDetailsDiv.querySelectorAll('.form-group'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.1, delay: 0.1 });
+                     }
+                 } else {
+                     if (hraDetailsDiv.classList.contains('visible')) {
+                         gsap.to(hraDetailsDiv, {
+                            maxHeight: 0, opacity: 0, marginTop: 0, paddingTop: 0, paddingBottom: 0, duration: 0.4, ease: 'power2.in', onComplete: () => {
+                                hraDetailsDiv.classList.remove('visible');
+                                 [basicSalaryHraInput, hraReceivedInput, rentPaidInput].forEach(input => { input.value = ''; clearError(input.id); });
+                             }
+                        });
+                    }
+                 }
+            };
+
+             const calculateTax = (taxableIncome, regime) => {
+                let tax = 0, rebate = 0, effectiveRebateLimit = 0;
+                taxableIncome = Math.max(0, taxableIncome); // Ensure non-negative
+
+                 if (regime === 'old') {
+                    if (taxableIncome <= 250000) tax = 0;
+                    else if (taxableIncome <= 500000) tax = (taxableIncome - 250000) * 0.05;
+                    else if (taxableIncome <= 1000000) tax = 12500 + (taxableIncome - 500000) * 0.20;
+                    else tax = 112500 + (taxableIncome - 1000000) * 0.30;
+                     effectiveRebateLimit = OLD_REGIME_REBATE_LIMIT;
+                    if (taxableIncome <= effectiveRebateLimit) rebate = Math.min(tax, OLD_REGIME_REBATE_MAX_AMOUNT);
+                } else { // New Regime (AY 2024-25)
+                    if (taxableIncome <= 300000) tax = 0;
+                    else if (taxableIncome <= 600000) tax = (taxableIncome - 300000) * 0.05;
+                    else if (taxableIncome <= 900000) tax = 15000 + (taxableIncome - 600000) * 0.10;
+                     else if (taxableIncome <= 1200000) tax = 45000 + (taxableIncome - 900000) * 0.15;
+                     else if (taxableIncome <= 1500000) tax = 90000 + (taxableIncome - 1200000) * 0.20;
+                    else tax = 150000 + (taxableIncome - 1500000) * 0.30;
+                    effectiveRebateLimit = NEW_REGIME_REBATE_LIMIT;
+                     if (taxableIncome <= effectiveRebateLimit) rebate = tax; // Full rebate up to 7L
+                 }
+                const taxAfterRebate = Math.max(0, tax - rebate);
+                const cessAmount = Math.round(taxAfterRebate * CESS_RATE);
+                 const totalTax = taxAfterRebate + cessAmount;
+                 return { incomeTax: tax, rebate: rebate, taxAfterRebate: taxAfterRebate, cess: cessAmount, totalTaxPayable: totalTax, effectiveRebateLimit: effectiveRebateLimit };
+            };
+
+            const runCalculation = () => {
+                 const validationResult = validateForm();
+                 if (!validationResult.isValid) { hideResults(); return; }
+
+                 const inputs = validationResult.values; const selectedRegime = regimeNewRadio.checked ? 'new' : 'old';
+                 const grossTotalIncome = inputs.grossSalary + inputs.otherIncome;
+                 let stdDed = (inputs.grossSalary > 0) ? STD_DEDUCTION_AMOUNT : 0;
+                 let hraEx = 0, d80C = 0, d80D = 0, d80E = 0, dNps = 0, totalDed = 0;
+
+                if (selectedRegime === 'old') {
+                     if (inputs.claimHRA === 'yes') { hraEx = calculateHraExemption(inputs.basicSalaryHRA, inputs.hraReceived, inputs.rentPaid, inputs.isMetro); }
+                     d80C = inputs.deduction80C; d80D = inputs.deduction80D; d80E = inputs.deduction80E; dNps = inputs.deductionNps;
+                     totalDed = stdDed + hraEx + d80C + d80D + d80E + dNps;
+                 } else { totalDed = stdDed; hraEx = 0; d80C = 0; d80D = 0; d80E = 0; dNps = 0; }
+
+                 const netTaxableIncome = Math.max(0, grossTotalIncome - totalDed);
+                 const currentTaxResults = calculateTax(netTaxableIncome, selectedRegime);
+
+                 taxData = {
+                     ...currentTaxResults, selectedRegime: selectedRegime, grossTotalIncome: grossTotalIncome, grossSalary: inputs.grossSalary, otherIncome: inputs.otherIncome,
+                     standardDeduction: stdDed, hraExemption: hraEx, deduction80C: d80C, deduction80D: d80D, deduction80E: d80E, deductionNps: dNps, totalDeductions: totalDed, netTaxableIncome: netTaxableIncome,
+                    netAnnualIncome: grossTotalIncome - currentTaxResults.totalTaxPayable, netMonthlyIncome: (grossTotalIncome - currentTaxResults.totalTaxPayable) / 12, rawInputs: inputs
+                };
+
+                // Calculate for other regime comparison
+                 const otherRegime = selectedRegime === 'old' ? 'new' : 'old'; let otherRegimeNetTaxable = 0;
+                if (otherRegime === 'old') {
+                     let potOldStdDed = (inputs.grossSalary > 0) ? STD_DEDUCTION_AMOUNT : 0; let potHRA = 0;
+                    if(inputs.claimHRA === 'yes' && inputs.basicSalaryHRA && inputs.hraReceived && inputs.rentPaid) { potHRA = calculateHraExemption(inputs.basicSalaryHRA, inputs.hraReceived, inputs.rentPaid, inputs.isMetro); }
+                    let potOldDed = potOldStdDed + potHRA + inputs.deduction80C + inputs.deduction80D + inputs.deduction80E + inputs.deductionNps;
+                    otherRegimeNetTaxable = Math.max(0, grossTotalIncome - potOldDed);
+                } else { let potNewStdDed = (inputs.grossSalary > 0) ? STD_DEDUCTION_AMOUNT : 0; otherRegimeNetTaxable = Math.max(0, grossTotalIncome - potNewStdDed); }
+                taxData.otherRegimeTaxData = calculateTax(otherRegimeNetTaxable, otherRegime); taxData.otherRegime = otherRegime;
+
+                 showResults(); updateUIValues(); updateCharts(); generateSuggestions(); generateComparisonNote();
+            };
+
+            const showResults = () => {
+                if (resultsOutput.classList.contains('hidden')) {
+                    resultsOutput.classList.remove('hidden'); initialMessage.classList.add('hidden');
+                    gsap.fromTo(resultsOutput, { opacity: 0, y: 20 }, { opacity: 1, y: 0, height: 'auto', duration: 0.5, ease: 'power2.out', delay: 0.1 });
+                     gsap.to(initialMessage, { opacity: 0, duration: 0.2 });
+                     gsap.fromTo(".results-summary .summary-item", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.1, ease: "back.out(1.7)", delay: 0.2 });
+                    gsap.fromTo("#res-breakdown-table tbody tr", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.04, ease: "power1.out", delay: 0.4 });
+                    gsap.fromTo("#comparison-note, #optimization-suggestions, #chart-area, .download-button-container", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.15, ease: "power2.out", delay: 0.6 });
+                }
+            };
+             const hideResults = () => {
+                 if (!resultsOutput.classList.contains('hidden')) {
+                    gsap.to(resultsOutput, { opacity: 0, y: 20, duration: 0.4, ease: "power2.in", onComplete: () => {
+                         resultsOutput.classList.add('hidden'); initialMessage.classList.remove('hidden');
+                         gsap.fromTo(initialMessage, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+                        clearCharts(); clearSuggestions(); comparisonNoteDiv.style.display = 'none'; disableDownloadButton();
+                    }});
+                }
+            };
+
+             const updateUIValues = () => {
+                const animateCounter = (element, value) => {
+                     let startValue = parseFloat(element.getAttribute('data-value')) || 0;
+                    gsap.to(element, {
+                         duration: 1.0, textContent: Math.round(value), ease: "power2.out", snap: { textContent: 1 },
+                        onUpdate: function() { this.targets()[0].textContent = formatCurrency(parseFloat(this.targets()[0].textContent)); },
+                        onComplete: function() { this.targets()[0].textContent = formatCurrency(value); this.targets()[0].setAttribute('data-value', value); }
+                     });
+                };
+                 animateCounter(resTaxableIncomeSpan, taxData.netTaxableIncome); animateCounter(resTotalTaxSpan, taxData.totalTaxPayable); animateCounter(resNetIncomeSpan, taxData.netAnnualIncome); animateCounter(resNetIncomeMonthlySpan, taxData.netMonthlyIncome);
+
+                const updateCell = (cell, value, isNeg = false, hide0 = true) => { if(!cell) return; const fmtVal = formatCurrency(value, hide0); cell.textContent = isNeg ? `(-) ${fmtVal.replace('₹ ','')}` : fmtVal; cell.setAttribute('data-value', Math.round(value)); gsap.fromTo(cell, { opacity: 0.7 }, { opacity: 1, duration: 0.3 }); };
+                updateCell(tableCells.grossIncome, taxData.grossTotalIncome, false, false); updateCell(tableCells.stdDeduction, taxData.standardDeduction); updateCell(tableCells.hraDeduction, taxData.hraExemption); updateCell(tableCells.c80cDeduction, taxData.deduction80C); updateCell(tableCells.c80dDeduction, taxData.deduction80D); updateCell(tableCells.c80eDeduction, taxData.deduction80E); updateCell(tableCells.npsDeduction, taxData.deductionNps); updateCell(tableCells.totalDeductions, taxData.totalDeductions); updateCell(tableCells.netTaxableIncome, taxData.netTaxableIncome, false, false); updateCell(tableCells.incomeTax, taxData.incomeTax); updateCell(tableCells.rebate, taxData.rebate, true); updateCell(tableCells.taxAfterRebate, taxData.taxAfterRebate); updateCell(tableCells.cess, taxData.cess); updateCell(tableCells.totalTaxPayable, taxData.totalTaxPayable, false, false);
+             };
+
+             const initializeCharts = () => {
+                const baseChartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true, font: { family: 'Poppins', size: 11 } } }, tooltip: { backgroundColor: isDarkMode ? 'rgba(50,50,50,0.9)' : 'rgba(255,255,255,0.9)', titleColor: isDarkMode ? '#eee' : '#333', bodyColor: isDarkMode ? '#ddd' : '#555', borderColor: isDarkMode ? '#666' : '#ddd', borderWidth: 1, padding: 10, boxPadding: 4, bodyFont: { family: 'Poppins' }, titleFont: { family: 'Poppins', weight: 'bold' }, callbacks: { label: (ctx) => { let lbl = ctx.dataset.label || ctx.label || ''; if (lbl) lbl += ': '; const val = ctx.parsed.y ?? ctx.parsed; if (val !== null && typeof val !== 'undefined') lbl += formatCurrency(val); return lbl; }}}}, animation: { duration: 800, easing: 'easeOutQuart' } };
+                const barOptions = structuredClone(baseChartOptions); barOptions.scales = { y: { beginAtZero: true, ticks: { font: { family: 'Poppins' }, callback: value => formatCurrency(value, true) }, grid: { } }, x: { ticks: { font: { family: 'Poppins' } }, grid: { display: false } } };
+                const pieOptions = structuredClone(baseChartOptions); pieOptions.plugins.legend.position = 'right'; pieOptions.cutout = '65%'; // Doughnut specific
+                const pieOnlyOptions = structuredClone(baseChartOptions); pieOnlyOptions.plugins.legend.position = 'right'; // For tax components pie
+
+                 charts.comparison = new Chart(comparisonChartCtx, { type: 'bar', data: { labels: [], datasets: [] }, options: barOptions });
+                charts.incomeBreakdown = new Chart(incomeBreakdownChartCtx, { type: 'doughnut', data: { labels: [], datasets: [] }, options: pieOptions });
+                 charts.taxComponents = new Chart(taxComponentsChartCtx, { type: 'pie', data: { labels: [], datasets: [] }, options: pieOnlyOptions });
+                 updateChartThemes();
+             };
+
+            const updateChartThemes = () => {
+                if (Object.keys(charts).length === 0) return;
+                 const textColor = isDarkMode ? '#e0e0e0' : '#333'; const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'; const secondaryColor = isDarkMode ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.5)'; const tooltipBg = isDarkMode ? 'rgba(40,40,40,0.9)' : 'rgba(255,255,255,0.95)'; const tooltipBorder = isDarkMode ? '#777' : '#ccc';
+                 Object.values(charts).forEach(chart => {
+                    if (chart.options.scales?.y) { chart.options.scales.y.ticks.color = secondaryColor; chart.options.scales.y.grid.color = gridColor; }
+                    if (chart.options.scales?.x) { chart.options.scales.x.ticks.color = secondaryColor; chart.options.scales.x.grid.color = gridColor; }
+                    chart.options.plugins.legend.labels.color = textColor;
+                     chart.options.plugins.tooltip.backgroundColor = tooltipBg; chart.options.plugins.tooltip.titleColor = textColor; chart.options.plugins.tooltip.bodyColor = textColor; chart.options.plugins.tooltip.borderColor = tooltipBorder;
+                     chart.update('none');
+                 });
+             };
+
+            const updateCharts = () => {
+                 if (!taxData || typeof taxData.totalTaxPayable === 'undefined') { clearCharts(); return; }
+                 const currentTax = taxData.totalTaxPayable; const otherTax = taxData.otherRegimeTaxData.totalTaxPayable;
+                const labels = taxData.selectedRegime === 'old' ? ['Old Regime', 'New Regime'] : ['New Regime', 'Old Regime'];
+                const data = taxData.selectedRegime === 'old' ? [currentTax, otherTax] : [currentTax, otherTax];
+                const bgColors = taxData.selectedRegime === 'old' ? (isDarkMode ? ['#ffc107', '#4dabf7'] : ['#ffc107', '#0dcaf0']) : (isDarkMode ? ['#4dabf7', '#ffc107'] : ['#0dcaf0', '#ffc107']);
+                charts.comparison.data.labels = labels; charts.comparison.data.datasets = [{ label: 'Total Tax', data: data, backgroundColor: bgColors, borderRadius: 4, borderWidth: 0 }]; charts.comparison.update();
+                gsap.from(charts.comparison.canvas, { duration: 0.5, scaleY: 0.8, opacity: 0.5, ease: 'back.out(1.5)', delay: 0.1 });
+
+                 let breakdownData = [], breakdownLabels = [], breakdownColors = [];
+                 if (taxData.netAnnualIncome > 0) { breakdownData.push(taxData.netAnnualIncome); breakdownLabels.push('Net Take-Home'); breakdownColors.push(isDarkMode ? '#20c997' : '#28a745'); }
+                if (taxData.totalTaxPayable > 0) { breakdownData.push(taxData.totalTaxPayable); breakdownLabels.push('Total Tax'); breakdownColors.push(isDarkMode ? '#f76e79' : '#dc3545'); }
+                if (taxData.totalDeductions > 0) { breakdownData.push(taxData.totalDeductions); breakdownLabels.push('Deductions'); breakdownColors.push(isDarkMode ? '#adb5bd' : '#6c757d'); }
+                charts.incomeBreakdown.data.labels = breakdownLabels; charts.incomeBreakdown.data.datasets = [{ data: breakdownData, backgroundColor: breakdownColors, borderColor: isDarkMode ? '#2c2c2c' : '#ffffff', borderWidth: 2, hoverOffset: 8 }]; charts.incomeBreakdown.update();
+                gsap.from(charts.incomeBreakdown.canvas, { duration: 0.7, rotation: -90, opacity: 0.5, ease: 'power2.out', delay: 0.15 });
+
+                const componentsWrapper = qs('#wrapper-tax-components-chart');
+                if (taxData.totalTaxPayable > 0) {
+                    componentsWrapper.style.display = ''; let pieData = [], pieLabels = [], pieColors = [];
+                    if(taxData.taxAfterRebate > 0) { pieData.push(taxData.taxAfterRebate); pieLabels.push('Tax Before Cess'); pieColors.push(isDarkMode ? '#fd7e14' : '#fd7e14'); }
+                     if(taxData.cess > 0) { pieData.push(taxData.cess); pieLabels.push('Health & Edu Cess'); pieColors.push(isDarkMode ? '#6c757d' : '#6c757d'); }
+                     charts.taxComponents.data.labels = pieLabels; charts.taxComponents.data.datasets = [{ data: pieData, backgroundColor: pieColors, borderColor: isDarkMode ? '#2c2c2c' : '#ffffff', borderWidth: 2, hoverOffset: 6 }]; charts.taxComponents.update();
+                     gsap.to(componentsWrapper, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.2)' });
+                     gsap.from(charts.taxComponents.canvas, { duration: 0.6, scale: 0.8, opacity: 0.5, ease: 'expo.out', delay: 0.2 });
+                } else { gsap.to(componentsWrapper, { opacity: 0, scale: 0.9, duration: 0.4, onComplete: () => { componentsWrapper.style.display = 'none'; charts.taxComponents.data.labels = []; charts.taxComponents.data.datasets = []; charts.taxComponents.update(); }}); }
+             };
+             const clearCharts = () => { Object.values(charts).forEach(c => { c.data.labels = []; c.data.datasets = []; c.update('none'); }); qsa('.chart-wrapper').forEach(w => gsap.to(w, { opacity: 0, scale: 0.9, duration: 0.3 })); };
+
+            const generateSuggestions = () => {
+                suggestionsList.innerHTML = ''; let suggestionsAdded = 0; if (!taxData || typeof taxData.totalTaxPayable === 'undefined') { suggestionsList.innerHTML = '<li class="placeholder-suggestion">Enter valid details first.</li>'; return; }
+                 const addSugg = (text, type = 'info') => { const li = document.createElement('li'); li.innerHTML = text; li.className = `suggestion-${type}`; suggestionsList.appendChild(li); suggestionsAdded++; gsap.fromTo(li, { opacity: 0, x: -15 }, { opacity: 1, x: 0, duration: 0.4, ease: "power1.out", delay: suggestionsAdded * 0.1 }); };
+                const currentTax = taxData.totalTaxPayable; const otherTax = taxData.otherRegimeTaxData.totalTaxPayable; const currRegime = taxData.selectedRegime; const otherRegime = taxData.otherRegime;
+                const diff = Math.abs(currentTax - otherTax); const currLbl = currRegime === 'old' ? 'Old' : 'New'; const otherLbl = otherRegime === 'old' ? 'Old' : 'New';
+                if (diff < 500) addSugg(`Tax under both <strong>${currLbl}</strong> (${formatCurrency(currentTax)}) and <strong>${otherLbl}</strong> (${formatCurrency(otherTax)}) regimes is very similar.`, 'info');
+                 else if (currentTax < otherTax) addSugg(`Selected <strong>${currLbl} Regime</strong> is beneficial, saving ~<strong>${formatCurrency(diff)}</strong> vs ${otherLbl}.`, 'good');
+                 else addSugg(`Consider the <strong>${otherLbl} Regime</strong>; it might save ~<strong>${formatCurrency(diff)}</strong> (${formatCurrency(otherTax)}) vs ${currLbl}.`, 'info');
+
+                if (currRegime === 'old' || (currRegime === 'new' && otherTax < currentTax)) { // Show old regime suggestions if it's selected or better
+                    if (taxData.deduction80C < MAX_80C_LIMIT) addSugg(`Utilize remaining Sec 80C limit of <strong>${formatCurrency(MAX_80C_LIMIT - taxData.deduction80C)}</strong> via eligible investments (Old Regime).`, 'info'); else addSugg(`Sec 80C limit fully utilized (Old Regime).`, 'good');
+                     if (taxData.deductionNps < MAX_80CCD1B_LIMIT) addSugg(`Invest <strong>${formatCurrency(MAX_80CCD1B_LIMIT - taxData.deductionNps)}</strong> more in NPS (Tier 1) for additional Sec 80CCD(1B) benefit (Old Regime).`, 'info');
+                    if (taxData.deduction80D === 0) addSugg(`Explore Health Insurance premium deductions under Sec 80D (Old Regime).`, 'info');
+                    if (taxData.hraExemption === 0 && taxData.rawInputs.claimHRA === 'no' && taxData.rawInputs.rentPaid > 0) addSugg(`Claiming HRA (Old Regime) might save tax if you pay rent.`, 'info'); else if(taxData.hraExemption > 0) addSugg(`HRA Exemption of ${formatCurrency(taxData.hraExemption)} applied (Old Regime).`, 'good');
+                }
+                 if (taxData.standardDeduction > 0) addSugg(`Standard Deduction of ${formatCurrency(taxData.standardDeduction)} applied (available in both regimes).`, 'good');
+                 if (suggestionsAdded === 0) addSugg("Review breakdown for details.", 'good');
+             };
+             const clearSuggestions = () => { suggestionsList.innerHTML = '<li class="placeholder-suggestion">...</li>'; gsap.to(qs('#optimization-suggestions'), { opacity: 0, duration: 0.2 }); };
+
+            const generateComparisonNote = () => {
+                 if (!taxData || typeof taxData.totalTaxPayable === 'undefined' || typeof taxData.otherRegimeTaxData === 'undefined') { comparisonNoteDiv.style.display = 'none'; return; }
+                 const currTax = taxData.totalTaxPayable; const otherTax = taxData.otherRegimeTaxData.totalTaxPayable; const currLbl = taxData.selectedRegime === 'old' ? 'Old' : 'New'; const otherLbl = taxData.otherRegime === 'old' ? 'Old' : 'New'; const diff = Math.abs(currTax - otherTax);
+                 let icon = 'fa-info-circle', color = '--info-color', note = '';
+                 if (diff < 500) { icon = 'fa-balance-scale'; color = '--secondary-color'; note = `Liability under <strong>${currLbl}</strong> (${formatCurrency(currTax)}) & <strong>${otherLbl}</strong> (${formatCurrency(otherTax)}) is similar.`; }
+                 else if (currTax < otherTax) { icon = 'fa-check-circle'; color = '--success-color'; note = `<strong>${currLbl} Regime</strong> (${formatCurrency(currTax)}) saves ~<strong>${formatCurrency(diff)}</strong> compared to ${otherLbl} (${formatCurrency(otherTax)}).`; }
+                else { icon = 'fa-exclamation-triangle'; color = '--warning-color'; note = `<strong>${otherLbl} Regime</strong> (${formatCurrency(otherTax)}) might save ~<strong>${formatCurrency(diff)}</strong> compared to ${currLbl} (${formatCurrency(currTax)}).`; }
+                 comparisonNoteDiv.innerHTML = `<h3><i class="fas ${icon}" style="color: var(${color});"></i> Regime Comparison</h3><p>${note}</p>`; comparisonNoteDiv.style.borderColor = `var(${color})`; comparisonNoteDiv.style.display = '';
+                 gsap.fromTo(comparisonNoteDiv, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.2)', delay: 0.1 });
+            };
+
+            const generatePDF = () => {
+                if (!taxData || Object.keys(taxData).length === 0 || !validateForm().isValid) { alert("Please calculate valid tax first."); return; }
+                const btnOrig = downloadPdfButton.innerHTML; downloadPdfButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...'; downloadPdfButton.disabled = true; gsap.to(downloadPdfButton, { opacity: 0.7 });
+                try {
+                     const { jsPDF } = window.jspdf; const doc = new jsPDF({ unit: 'mm', format: 'a4' }); let y = 15, m = 15, pw = doc.internal.pageSize.width, ph = doc.internal.pageSize.height, uw = pw - 2 * m;
+                     const addTextWrap = (txt, x, y, mw, opts = {}) => { const lines = doc.splitTextToSize(txt, mw); doc.text(lines, x, y, opts); return y + (lines.length * (opts.lh || 1.15) * (doc.getFontSize() / doc.internal.scaleFactor)); };
+                     const addHeading = (txt, y, lvl = 1) => { const fs = lvl === 1 ? 16 : (lvl === 2 ? 13 : 11); doc.setFontSize(fs); doc.setFont(undefined, 'bold'); doc.setTextColor(40, 119, 171); y += (lvl === 1 ? 8 : 6); doc.text(txt, m, y); y += 4; doc.setFont(undefined, 'normal'); doc.setTextColor(0); doc.setLineWidth(0.2); doc.setDrawColor(200); doc.line(m, y, pw - m, y); y += 5; return y; };
+                     const addItem = (lbl, val, y) => { doc.setFontSize(10); doc.setFont(undefined, 'normal'); doc.setTextColor(80); doc.text(lbl, m, y); doc.setFont(undefined, 'bold'); doc.setTextColor(0); doc.text(val, m + uw / 2 + 10, y); return y + 5.5; }; // Adjusted spacing
+                    doc.setFontSize(18); doc.setFont(undefined,'bold'); doc.setTextColor(40, 119, 171); doc.text(`Income Tax Report - AY ${CURRENT_AY}`, pw / 2, y, { align: 'center' }); y += 6; doc.setFontSize(9); doc.setFont(undefined,'normal'); doc.setTextColor(120); doc.text(`Regime: ${taxData.selectedRegime === 'old' ? 'Old' : 'New (Default)'} | Generated: ${new Date().toLocaleDateString()}`, pw / 2, y, { align: 'center' }); y += 8;
+                    y = addHeading("Summary", y, 2); y = addItem("Gross Total Income:", formatCurrency(taxData.grossTotalIncome), y); y = addItem("Total Deductions:", formatCurrency(taxData.totalDeductions), y); y = addItem("Net Taxable Income:", formatCurrency(taxData.netTaxableIncome), y); y = addItem("Total Tax Payable:", formatCurrency(taxData.totalTaxPayable), y); doc.setFont(undefined, 'bold'); doc.setTextColor(40, 167, 69); y = addItem("Net Annual Take-Home:", formatCurrency(taxData.netAnnualIncome), y); y = addItem("Net Monthly Take-Home:", formatCurrency(taxData.netMonthlyIncome), y); doc.setTextColor(0);
+                    if (y > ph - 80) { doc.addPage(); y = m; }
+                     y = addHeading("Annual Breakdown", y, 2);
+                     const tblHead = [['Component', 'Amount (₹)']]; const tblBody = [
+                         ['Gross Total Income', formatCurrency(taxData.grossTotalIncome, false)], ['(-) Standard Deduction', formatCurrency(taxData.standardDeduction)], ['(-) HRA Exemption', formatCurrency(taxData.hraExemption)], ['(-) Section 80C', formatCurrency(taxData.deduction80C)], ['(-) Section 80D', formatCurrency(taxData.deduction80D)], ['(-) Section 80E', formatCurrency(taxData.deduction80E)], ['(-) Section 80CCD(1B) NPS', formatCurrency(taxData.deductionNps)],
+                        ['Total Deductions/Exemptions', formatCurrency(taxData.totalDeductions)], ['(=) Net Taxable Income', formatCurrency(taxData.netTaxableIncome, false)], ['Income Tax (Before Rebate)', formatCurrency(taxData.incomeTax)], ['(-) Rebate u/s 87A', `(-) ${formatCurrency(taxData.rebate).replace('₹ ','')}`], ['Tax After Rebate', formatCurrency(taxData.taxAfterRebate)], ['(+) Health & Edu Cess (4%)', formatCurrency(taxData.cess)], ['(=) Total Tax Payable', formatCurrency(taxData.totalTaxPayable, false)]];
+                     doc.autoTable({ head: tblHead, body: tblBody, startY: y, theme: 'grid', headStyles: { fillColor: [23, 162, 184], textColor: 255, fontStyle: 'bold', fontSize: 9 }, bodyStyles: { fontSize: 8.5, cellPadding: 1.8 }, columnStyles: { 1: { halign: 'right' } }, didParseCell: (data) => { if (data.section === 'body' && [7, 8, 13].includes(data.row.index)) { data.cell.styles.fontStyle = 'bold'; data.cell.styles.fillColor = '#f0f0f0'; } }, didDrawPage: (data) => { y = data.cursor.y + 5; }});
+                    if (y > ph - 50) { doc.addPage(); y = m; }
+                     const suggItems = suggestionsList.querySelectorAll('li:not(.placeholder-suggestion)');
+                     if (suggItems.length > 0) { y = addHeading("Tax Suggestions", y, 2); doc.setFontSize(9); doc.setFont(undefined, 'normal'); doc.setTextColor(50); suggItems.forEach(item => { const prefix = item.classList.contains('suggestion-good') ? '✓ ' : '• '; const cleanText = item.innerHTML.replace(/<[^>]*>/g, ""); y = addTextWrap(`${prefix}${cleanText}`, m + 3, y + 3, uw - 6, {lh: 1.3}); if (y > ph - 25) { doc.addPage(); y = m; } }); }
+                     const pageCount = doc.internal.getNumberOfPages(); doc.setFontSize(8); doc.setTextColor(150); for (let i = 1; i <= pageCount; i++) { doc.setPage(i); doc.text(`Page ${i}/${pageCount}`, pw / 2, ph - 10, { align: 'center' }); doc.text("Estimates only. Consult a professional.", m, ph - 10); }
+                     doc.save(`Income_Tax_Report_AY${CURRENT_AY}.pdf`);
+                } catch (err) { console.error("PDF Error:", err); alert("PDF generation failed."); } finally { setTimeout(() => { downloadPdfButton.innerHTML = btnOrig; downloadPdfButton.disabled = !validateForm().isValid; gsap.to(downloadPdfButton, { opacity: 1 }); }, 500); }
+            };
+
+            const enableDownloadButton = () => { if(downloadPdfButton.disabled){ downloadPdfButton.disabled = false; gsap.to(downloadPdfButton, { opacity: 1, scale: 1, cursor: 'pointer', duration: 0.3 }); } };
+            const disableDownloadButton = () => { if(!downloadPdfButton.disabled){ downloadPdfButton.disabled = true; gsap.to(downloadPdfButton, { opacity: 0.6, scale: 0.98, cursor: 'not-allowed', duration: 0.3 }); } };
+
+            const handleInputChange = () => { clearTimeout(calculationTimeout); calculationTimeout = setTimeout(runCalculation, 400); };
+            qsa('#tax-form input[type="number"], #tax-form select').forEach(el => { el.addEventListener('input', handleInputChange); el.addEventListener('change', handleInputChange); el.addEventListener('focus', (e) => { if (!e.target.disabled) { gsap.to(e.target.closest('.form-group'), { scale: 1.02, zIndex: 1, duration: 0.2 }); } }); el.addEventListener('blur', (e) => { gsap.to(e.target.closest('.form-group'), { scale: 1, zIndex: 0, duration: 0.3 }); }); });
+            qsa('input[name="taxRegime"]').forEach(radio => { radio.addEventListener('change', () => { const isOld = radio.value === 'old'; gsap.to(qs('.regime-slider'), { transform: `translateX(${isOld ? '100%' : '0%'})`, duration: 0.45, ease: 'elastic.out(1, 0.75)' }); updateDeductionsUI(isOld); runCalculation(); }); });
+            claimHraSelect.addEventListener('change', () => { toggleHraDetailsVisibility(); runCalculation(); });
+            downloadPdfButton.addEventListener('click', generatePDF);
+
+             const initializeApp = () => {
+                updateDeductionsUI(regimeOldRadio.checked);
+                initializeCharts();
+                 disableDownloadButton();
+                 qs('#current-year').textContent = new Date().getFullYear();
+                const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+                 tl.to("#main-header", { y: 0, opacity: 1, duration: 0.6 })
+                    .to(["#input-card", "#results-section"], { scale: 1, opacity: 1, duration: 0.5, stagger:0.1 }, "-=0.3")
+                    .to(".regime-toggle-wrapper", { y: 0, opacity: 1, duration: 0.4 }, "-=0.3")
+                     .to(".income-group", { x: 0, opacity: 1, duration: 0.4, stagger: 0.1 }, "-=0.2")
+                    .to(".form-group.deduction-group, .form-group.deduction-info, .hra-inputs .form-group", { x: 0, opacity: (i, target) => target.querySelector(':disabled') ? 0.5 : 1, duration: 0.3, stagger: 0.05 }, "-=0.1")
+                     .to("footer", { y: 0, opacity: 1, duration: 0.6 }, "+=0.1");
+             };
+
+             initializeApp();
+        });
+    </script>
+</body>
+</html>
